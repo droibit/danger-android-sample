@@ -3,13 +3,20 @@ language: android
 jdk:
   - oraclejdk8
 
+env:
+  global:
+    - secure: "JxteA+ojUP1xngr6y8rI1GaxlAvLJggxos4bBk+ncB5rKsU+2NBc8x+K3ot/xqdbQWLBDAIPb8QO8QWt5qSiCsD6ZO918QLQJFJhS2gEw9dteL8tjW+iORQWoxArNpSaK+KYFIUM0K4d2DQnKaa+seuvZf11UE66l1zKm5TBxYmKy3WxtBUBGXhaItC+kPm8o49m0Fk18KiQBOwUkS/wYKd/tyFV7y8lj6wn7CZohz+nvKaMhBhzEmfXp8xRlL1/9FBSc8puUMPYa02tC7PBcpiNqtHAR0qVcHQPP7rkp4wByXLE0reucNY9/G8vGQNfVcnTiR0f41WLI0agvwF5pa/ht/DDfJf1C+9yDM3PTaFUgvo3x4APJZmyfltgtKSK9i3DOEkLT3PzJ8/cnttPNAfi2hWFlRD9aslBy7pUnWWT1VrIFdULJDJ/+bLP+t8ajvtfliIMtJXcrmoGzVFnP7M9kJDPNNcc7E3Q2aEP88JGjIdghm5ghc8cO2K1iXsJcKjju/KyhRdNHqpAhp5CzlA/K1W75o/lwgND713DkyYi2NYdweh10dPfiKVXRdmTXIDZwP3Q5M47e6NQJ/FM+TZwsoKuIoXjaOE1MISEN+vpb75gK2YJ05BSh57ckHswT1aQUvJp0aPjdoeSs2VdMJ3qgrdi7q3aB3yrK8KaqTo="
+
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+install:
+  - bundle install
 
 script:
   - ./gradlew :app:assembleDebug
   - ./gradlew :app:ktlintProdDebugCheck :app:lintProdDebug
+  - bundle exec danger
 
 notifications:
   email: false
